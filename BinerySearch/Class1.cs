@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BinerySearch
 {
-    public class Class1
+    public class Node
     {
+        Node Left;
+        Node right;
+
+        int data;
+
+
+
     }
 }
