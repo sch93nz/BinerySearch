@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BinerySearch
 {
-    public class Node
+    public class Node<T> where T : IComparable<T>
     {
-        private Node Left;
-        private Node right;
-        private int data;
+        private Node<T> Left;
+        private Node<T> right;
+        private T data;
         /**
          * Basic Constructer of i am just making a node 
          */
-        public Node(int value)
+        public Node(T value)
         {
             data = value;
         }
@@ -22,14 +22,14 @@ namespace BinerySearch
         /**
          * Returns the left child of course
          */
-        public Node getLeft()
+        public Node<T> getLeft()
         {
             return Left;
         }
         /**
          * sets the left child of course
          */
-        public Node setLeft(Node child)
+        public Node<T> setLeft(Node<T> child)
         {
             Left = child;
             return Left;
@@ -37,7 +37,7 @@ namespace BinerySearch
         /**
          * Returns the Right child of course
          */
-        public Node getRight()
+        public Node<T> getRight()
         {
             return right;
         }
@@ -45,37 +45,40 @@ namespace BinerySearch
         /**
          * sets the right child of course
          */
-         public Node setRight(Node child)
+         public Node<T> setRight(Node<T> child)
         {
             right = child;
             return right;
         }
         
-        public int getdata()
+        public T getdata()
         {
             return data;
         }
+
+       
     }
 
-    public class BinerySearch
+    public class BinerySearch<T> where T : IComparable<T>
     {
-        Node Root;
+        Node<T> Root;
 
-        public Node addChild(Node child)
+        public Node<T> addChild(Node<T> child)
         {
-            Node temp = Root;
+            Node<T> temp = Root;
 
             if(Root == null)
             {
                 Root = child;
 
             }
+
             /*
              *complicated stuff to making all this work  
              * 
              */
             while (true) { 
-            if (temp.getdata() < child.getdata())
+            if (temp.getdata().CompareTo(child.getdata())>0)
             {
                 if (temp.getLeft() == null)
                 {
@@ -86,7 +89,7 @@ namespace BinerySearch
                     temp = temp.getLeft();
                 }
             }
-            else if (temp.getdata() > child.getdata())
+            else if (temp.getdata().CompareTo(child.getdata()) < 0)
             {
                     if(temp.getRight()== null)
                     {
@@ -104,10 +107,13 @@ namespace BinerySearch
             
         }
 
-        public Node addChild(int value)
+        public Boolean addChild(T value)
         {
-            Node child = new Node(value);
-            return addChild(child);
+            Node<T> child = new Node<T>(value);
+            child = addChild(child);
+
+            if (child == null) return false;
+            else return true;
         }
 
     }
